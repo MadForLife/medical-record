@@ -14,10 +14,6 @@ import java.time.LocalDate;
 public class SickLeave extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "patients_id", nullable = false)
-    private Patient patient;
-
-    @ManyToOne
     @JoinColumn(name = "appointments_id", nullable = false)
     private Appointment appointment;
 
