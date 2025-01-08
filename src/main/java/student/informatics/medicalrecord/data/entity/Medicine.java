@@ -1,14 +1,15 @@
 package student.informatics.medicalrecord.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
+@Builder
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+
 @Entity
 @Table(name = "medicines")
 public class Medicine extends BaseEntity {
