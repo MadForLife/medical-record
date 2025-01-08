@@ -1,20 +1,18 @@
 package student.informatics.medicalrecord.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Getter @Setter
 @NoArgsConstructor
+
 @Entity
 @PrimaryKeyJoinColumn(name = "users_id")
 public class Doctor extends User {
 
-    @Column(name = "doctor_is_personal_doctor", nullable = false,
-            columnDefinition = "TINYINT(1) DEFAULT 0")
+    @Column(name = "doctor_is_personal_doctor", nullable = false)
     private Boolean isPersonalDoctor;
 
     @OneToMany(mappedBy = "personalDoctor")

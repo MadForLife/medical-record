@@ -1,12 +1,12 @@
 package student.informatics.medicalrecord.data.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
