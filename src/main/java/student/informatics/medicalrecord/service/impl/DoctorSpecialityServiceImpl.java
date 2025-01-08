@@ -1,11 +1,14 @@
 package student.informatics.medicalrecord.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import student.informatics.medicalrecord.data.dto.doc_specialities.CreateDoctorSpecialityDTO;
 import student.informatics.medicalrecord.data.dto.doc_specialities.SimpleDoctorSpecialityDTO;
 import student.informatics.medicalrecord.data.dto.doc_specialities.UpdateDoctorSpecialityDTO;
+import student.informatics.medicalrecord.data.entity.Doctor;
 import student.informatics.medicalrecord.data.entity.DoctorSpeciality;
+import student.informatics.medicalrecord.data.repository.DoctorRepository;
 import student.informatics.medicalrecord.data.repository.DoctorSpecialityRepository;
 import student.informatics.medicalrecord.exception.DoctorSpecialityNotFoundException;
 import student.informatics.medicalrecord.service.DoctorSpecialityService;
@@ -17,6 +20,7 @@ import java.util.List;
 @Service
 public class DoctorSpecialityServiceImpl implements DoctorSpecialityService {
 
+    private final DoctorRepository doctorRepository;
     private final DoctorSpecialityRepository doctorSpecialityRepository;
     private final ModelMapperUtil modelMapperUtil;
 
@@ -60,12 +64,19 @@ public class DoctorSpecialityServiceImpl implements DoctorSpecialityService {
                 .map(doctorSpecialityRepository.save(doctorSpeciality), SimpleDoctorSpecialityDTO.class);
     }
 
-    //FIXME define on cascade behaviour violates a FK Constraint
     @Override
+    @Transactional
     public void deleteDoctorSpeciality(String id) {
 
         DoctorSpeciality doctorSpeciality = doctorSpecialityRepository.findById(id)
-                .orElseThrow(() -> new DoctorSpecialityNotFoundException(String.format("DoctorSpeciality with ID '%s' not found", id)));
+                .orElseThrow(() -> new DoctorSpecialityNotFoundException(String.format("Doctor speciality with ID: '%s' not found", id)));
+
+        List<Doctor> associatedDoctors = doctorRepository.findAllBySpecialitiesContaining(doctorSpeciality);
+
+        associatedDoctors.forEach(doctor -> {
+            doctor.getSpecialities().remove(doctorSpeciality);
+            doctorRepository.save(doctor);
+        });
 
         doctorSpecialityRepository.delete(doctorSpeciality);
     }

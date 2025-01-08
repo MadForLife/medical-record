@@ -42,7 +42,6 @@ public class DoctorSpecialityController {
         return ResponseEntity.ok(doctorSpecialityService.updateDoctorSpeciality(dto, id));
     }
 
-    // FIXME Violates constrain (many-to-many)
     @DeleteMapping("/{speciality_id}/delete")
     public ResponseEntity<Void> deleteDoctorSpeciality(@PathVariable("speciality_id") String id) {
         doctorSpecialityService.deleteDoctorSpeciality(id);
