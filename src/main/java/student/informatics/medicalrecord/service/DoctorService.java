@@ -1,5 +1,6 @@
 package student.informatics.medicalrecord.service;
 
+import student.informatics.medicalrecord.data.dto.doctor.DoctorSpecialitiesDTO;
 import student.informatics.medicalrecord.data.dto.doctor.SimpleDoctorDTO;
 import student.informatics.medicalrecord.data.dto.doctor.UpdateDoctorStatusDTO;
 
@@ -12,4 +13,7 @@ public interface DoctorService {
     SimpleDoctorDTO findSimpleDoctorById(String id);
 
     SimpleDoctorDTO updateDoctorStatus(UpdateDoctorStatusDTO doctorStatusDTO, String id);
+
+    DoctorSpecialitiesDTO findDoctorWithSpecialitiesById(String id);
+
 }

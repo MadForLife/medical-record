@@ -3,6 +3,7 @@ package student.informatics.medicalrecord.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import student.informatics.medicalrecord.data.dto.doctor.DoctorSpecialitiesDTO;
 import student.informatics.medicalrecord.data.dto.doctor.SimpleDoctorDTO;
 import student.informatics.medicalrecord.data.dto.doctor.UpdateDoctorStatusDTO;
 import student.informatics.medicalrecord.service.DoctorService;
@@ -32,4 +33,10 @@ public class DoctorController {
                                                                   @PathVariable("doctor_id") String id) {
         return ResponseEntity.ok(doctorService.updateDoctorStatus(updateDoctorStatusDTO, id));
     }
+
+    @GetMapping("/{doctor_id}/specialities")
+    public ResponseEntity<DoctorSpecialitiesDTO> findDoctorSpecialitiesById(@PathVariable("doctor_id") String id) {
+        return ResponseEntity.ok(doctorService.findDoctorWithSpecialitiesById(id));
+    }
+
 }

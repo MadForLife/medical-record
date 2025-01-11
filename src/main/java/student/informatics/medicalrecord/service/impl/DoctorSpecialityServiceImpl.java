@@ -66,7 +66,7 @@ public class DoctorSpecialityServiceImpl implements DoctorSpecialityService {
 
     @Override
     @Transactional
-    public void deleteDoctorSpeciality(String id) {
+    public void deleteDoctorSpecialityById(String id) {
 
         DoctorSpeciality doctorSpeciality = doctorSpecialityRepository.findById(id)
                 .orElseThrow(() -> new DoctorSpecialityNotFoundException(String.format("Doctor speciality with ID: '%s' not found", id)));

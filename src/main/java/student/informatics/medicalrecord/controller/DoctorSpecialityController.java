@@ -44,7 +44,7 @@ public class DoctorSpecialityController {
 
     @DeleteMapping("/{speciality_id}/delete")
     public ResponseEntity<Void> deleteDoctorSpeciality(@PathVariable("speciality_id") String id) {
-        doctorSpecialityService.deleteDoctorSpeciality(id);
+        doctorSpecialityService.deleteDoctorSpecialityById(id);
         return ResponseEntity.noContent().build();
     }
 }

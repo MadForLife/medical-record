@@ -12,5 +12,6 @@ public interface DoctorSpecialityService {
     SimpleDoctorSpecialityDTO findSimpleSpecialityById(String id);
     SimpleDoctorSpecialityDTO createDoctorSpeciality(CreateDoctorSpecialityDTO createDoctorSpecialityDTO);
     SimpleDoctorSpecialityDTO updateDoctorSpeciality(UpdateDoctorSpecialityDTO updateDoctorSpecialityDTO, String id);
-    void deleteDoctorSpeciality(String id);
+
+    void deleteDoctorSpecialityById(String id);
 }
