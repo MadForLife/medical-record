@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    // TODO Return type, why Object?
     @ExceptionHandler(DoctorSpecialityNotFoundException.class)
     public ResponseEntity<Object> handleDoctorSpecialityNotFoundException(DoctorSpecialityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
@@ -25,6 +26,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DoctorNotFoundException.class)
+    public ResponseEntity<Object> handleDoctorNotFoundException(DoctorNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PatientNotFoundException.class)
+    public ResponseEntity<Object> handlePatientNotFoundException(PatientNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public ResponseEntity<Object> handleAppointmentNotFoundException(AppointmentNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
