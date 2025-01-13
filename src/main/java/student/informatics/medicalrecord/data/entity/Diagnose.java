@@ -16,7 +16,7 @@ public class Diagnose extends BaseEntity {
     private Appointment appointment;
 
     @ManyToOne
-    @JoinColumn(name = "dcl_id", nullable = false)
+    @JoinColumn(name = "dcl_id", nullable = true)
     private DiagnoseCode diagnoseCode;
 
     @Column(name = "diagnose_description", nullable = true, length = 600)

@@ -49,4 +49,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
+    @ExceptionHandler(PrescriptionNotFoundException.class)
+    public ResponseEntity<Object> handlePrescriptionNotFoundException(PrescriptionNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DiagnoseNotFoundException.class)
+    public ResponseEntity<Object> handleDiagnoseNotFoundException(DiagnoseNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
 }
