@@ -14,6 +14,8 @@ public class SimplePatientDTO {
 
     private String id;
     private String ucn;
+    private String firstName;
+    private String lastName;
     private Boolean isHealthInsured;
     private SimpleDoctorDTO doctor;
 }
