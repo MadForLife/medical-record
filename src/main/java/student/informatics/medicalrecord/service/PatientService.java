@@ -13,4 +13,6 @@ public interface PatientService {
 
     SimplePatientDTO updatePatient(UpdatePatientDTO updatePatientDTO, String id);
 
+    List<SimplePatientDTO> findAllSimplePatientsByDoctorId(String id);
+
 }

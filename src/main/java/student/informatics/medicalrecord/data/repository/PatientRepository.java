@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import student.informatics.medicalrecord.data.entity.Patient;
 
+import java.util.List;
+
 public interface PatientRepository extends JpaRepository<Patient, String> {
 
     @Modifying
@@ -17,4 +19,6 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
                        @Param("pin") String pin,
                        @Param("isHealthInsured") Boolean isHealthInsured,
                        @Param("doctorId") String doctorId);
+
+    List<Patient> findByPersonalDoctorId(String id);
 }

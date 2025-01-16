@@ -14,6 +14,7 @@ import student.informatics.medicalrecord.utility.ModelMapperUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -65,6 +66,29 @@ public class DoctorServiceImpl implements DoctorService {
         doctorSpecialitiesDTO.setDoctorSpecialities(specialities);
 
         return doctorSpecialitiesDTO;
+    }
+
+    @Override
+    public List<DoctorSpecialitiesDTO> findAllDoctorsWithSpecialities() {
+
+        List<Doctor> doctors = doctorRepository.findAll();
+
+        List<DoctorSpecialitiesDTO> doctorSpecialitiesDTOList = doctors.stream()
+                .map(doctor -> {
+                    List<SimpleDoctorSpecialityDTO> specialities =
+                            modelMapperUtil.mapList(new ArrayList<>(doctor.getSpecialities()), SimpleDoctorSpecialityDTO.class);
+
+                    DoctorSpecialitiesDTO doctorSpecialitiesDTO = new DoctorSpecialitiesDTO();
+                    doctorSpecialitiesDTO.setId(doctor.getId());
+                    doctorSpecialitiesDTO.setFirstName(doctor.getFirstName());
+                    doctorSpecialitiesDTO.setLastName(doctor.getLastName());
+                    doctorSpecialitiesDTO.setIsPersonalDoctor(doctor.getIsPersonalDoctor());
+                    doctorSpecialitiesDTO.setDoctorSpecialities(specialities);
+
+                    return doctorSpecialitiesDTO;
+                }).collect(Collectors.toList());
+
+        return doctorSpecialitiesDTOList;
     }
 
     // TODO Add UpdateDoctorSpecialities

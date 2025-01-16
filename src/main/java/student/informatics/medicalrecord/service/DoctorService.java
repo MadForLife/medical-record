@@ -16,4 +16,5 @@ public interface DoctorService {
 
     DoctorSpecialitiesDTO findDoctorWithSpecialitiesById(String id);
 
+    List<DoctorSpecialitiesDTO> findAllDoctorsWithSpecialities();
 }

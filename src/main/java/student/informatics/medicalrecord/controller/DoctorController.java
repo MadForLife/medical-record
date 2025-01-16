@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 
+@CrossOrigin(origins = "http://localhost:8050")
 @RestController
 @RequestMapping("/api.medical-record/v1/doctors")
 public class DoctorController {
@@ -37,6 +38,11 @@ public class DoctorController {
     @GetMapping("/{doctor_id}/specialities")
     public ResponseEntity<DoctorSpecialitiesDTO> findDoctorSpecialitiesById(@PathVariable("doctor_id") String id) {
         return ResponseEntity.ok(doctorService.findDoctorWithSpecialitiesById(id));
+    }
+
+    @GetMapping("/with-specialities")
+    public ResponseEntity<List<DoctorSpecialitiesDTO>> findAllDoctorsWithSpecialities() {
+        return ResponseEntity.ok(doctorService.findAllDoctorsWithSpecialities());
     }
 
 }

@@ -5,12 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import student.informatics.medicalrecord.data.dto.patient.SimplePatientDTO;
 import student.informatics.medicalrecord.data.dto.patient.UpdatePatientDTO;
+import student.informatics.medicalrecord.data.entity.Patient;
 import student.informatics.medicalrecord.service.PatientService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 
+@CrossOrigin(origins = "http://localhost:8050")
 @RestController
 @RequestMapping("/api.medical-record/v1/patients")
 public class PatientController {
@@ -31,6 +33,11 @@ public class PatientController {
     public ResponseEntity<SimplePatientDTO> updatePatientById(@RequestBody UpdatePatientDTO updatePatientDTO,
                                                           @PathVariable("patient_id") String id) {
         return ResponseEntity.ok(patientService.updatePatient(updatePatientDTO, id));
+    }
+
+    @GetMapping("/simple/{doctor_id}/doctor")
+    public ResponseEntity<List<SimplePatientDTO>> findSimplePatientByDoctorId(@PathVariable("doctor_id") String id) {
+     return ResponseEntity.ok(patientService.findAllSimplePatientsByDoctorId(id));
     }
 
     // TODO Delete Endpoint
