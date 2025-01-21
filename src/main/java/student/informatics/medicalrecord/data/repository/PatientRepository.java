@@ -20,5 +20,19 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
                        @Param("isHealthInsured") Boolean isHealthInsured,
                        @Param("doctorId") String doctorId);
 
+
     List<Patient> findByPersonalDoctorId(String id);
+
+
+    // TODO Unit Test
+    @Query("SELECT DISTINCT p FROM Patient p " +
+            "JOIN FETCH p.appointments a " +
+            "JOIN FETCH a.diagnoses d " +
+            "JOIN FETCH d.diagnoseCode dc " +
+            "WHERE dc.id = :diagnoseCodeId")
+    List<Patient> findPatientsByDiagnosisCode(String diagnoseCodeId);
+
+    List<Patient> findPatientsByPersonalDoctorId(String personalDoctorId);
+
+
 }

@@ -3,13 +3,16 @@ package student.informatics.medicalrecord.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import student.informatics.medicalrecord.data.dto.medicine.MedicineIdsRequestDTO;
 import student.informatics.medicalrecord.data.dto.prescription.CreatePrescriptionDTO;
+import student.informatics.medicalrecord.data.dto.prescription.PrescriptionMedicinesDTO;
 import student.informatics.medicalrecord.data.dto.prescription.SimplePrescriptionDTO;
 import student.informatics.medicalrecord.data.dto.prescription.UpdatePrescriptionDTO;
 import student.informatics.medicalrecord.service.PrescriptionService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8050")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api.medical-record/v1/prescriptions")
@@ -38,4 +41,13 @@ public class PrescriptionController {
             @PathVariable("prescription_id") String id) {
         return ResponseEntity.ok(prescriptionService.updatePrescription(updatePrescriptionDTO, id));
     }
+
+    @PostMapping("/{prescription_id}/add-medicines")
+    public ResponseEntity<PrescriptionMedicinesDTO> addMedicinesToPrescription(
+            @PathVariable("prescription_id") String id,
+            @RequestBody MedicineIdsRequestDTO medicineIds) {
+        return ResponseEntity.ok(prescriptionService.addMedicinesToPrescription(medicineIds, id));
+    }
+
+
 }

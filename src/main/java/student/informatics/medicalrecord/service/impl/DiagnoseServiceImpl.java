@@ -4,8 +4,10 @@ import jdk.jshell.Diag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import student.informatics.medicalrecord.data.dto.diagnose.CreateDiagnoseDTO;
+import student.informatics.medicalrecord.data.dto.diagnose.DiagnosisFrequencyDTO;
 import student.informatics.medicalrecord.data.dto.diagnose.SimpleDiagnoseDTO;
 import student.informatics.medicalrecord.data.dto.diagnose.UpdateDiagnoseDTO;
+import student.informatics.medicalrecord.data.dto.doctor.DoctorPatientCountDTO;
 import student.informatics.medicalrecord.data.entity.Appointment;
 import student.informatics.medicalrecord.data.entity.Diagnose;
 import student.informatics.medicalrecord.data.entity.DiagnoseCode;
@@ -82,4 +84,10 @@ public class DiagnoseServiceImpl implements DiagnoseService {
         return diagnoseCodeRepository.findById(diagnoseCodeId)
                 .orElseThrow(() -> new DiagnoseNotFoundException(String.format("Diagnose with ID: '%s' not found", diagnoseCodeId)));
     }
+
+    @Override
+    public List<DiagnosisFrequencyDTO> findMostFrequentDiagnoses() {
+        return diagnoseRepository.findMostFrequentDiagnoses();
+    }
+
 }

@@ -3,6 +3,7 @@ package student.informatics.medicalrecord.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import student.informatics.medicalrecord.data.dto.doc_specialities.SimpleDoctorSpecialityDTO;
+import student.informatics.medicalrecord.data.dto.doctor.DoctorPatientCountDTO;
 import student.informatics.medicalrecord.data.dto.doctor.DoctorSpecialitiesDTO;
 import student.informatics.medicalrecord.data.dto.doctor.SimpleDoctorDTO;
 import student.informatics.medicalrecord.data.dto.doctor.UpdateDoctorStatusDTO;
@@ -89,6 +90,11 @@ public class DoctorServiceImpl implements DoctorService {
                 }).collect(Collectors.toList());
 
         return doctorSpecialitiesDTOList;
+    }
+
+    @Override
+    public List<DoctorPatientCountDTO> findPatientCountByDoctor() {
+        return doctorRepository.findPatientCountByDoctor();
     }
 
     // TODO Add UpdateDoctorSpecialities

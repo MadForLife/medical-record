@@ -7,6 +7,7 @@ import student.informatics.medicalrecord.data.dto.KeycloakSyncModel;
 import student.informatics.medicalrecord.data.entity.User;
 import student.informatics.medicalrecord.service.impl.KeycloakSyncServiceImpl;
 
+
 @RestController
 @RequestMapping("/keycloak/sync-request/user")
 @RequiredArgsConstructor

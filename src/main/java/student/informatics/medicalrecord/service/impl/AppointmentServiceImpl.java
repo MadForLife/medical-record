@@ -2,12 +2,14 @@ package student.informatics.medicalrecord.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import student.informatics.medicalrecord.data.dto.appointment.DetailedAppointmentDTO;
 import student.informatics.medicalrecord.data.dto.appointment.CreateAppointmentDTO;
 import student.informatics.medicalrecord.data.dto.appointment.SimpleAppointmentDTO;
 import student.informatics.medicalrecord.data.dto.appointment.UpdateAppointmentDTO;
-import student.informatics.medicalrecord.data.entity.Appointment;
-import student.informatics.medicalrecord.data.entity.Doctor;
-import student.informatics.medicalrecord.data.entity.Patient;
+import student.informatics.medicalrecord.data.dto.diagnose.SimpleDiagnoseDTO;
+import student.informatics.medicalrecord.data.dto.prescription.PrescriptionMedicinesDTO;
+import student.informatics.medicalrecord.data.dto.prescription.SimplePrescriptionDTO;
+import student.informatics.medicalrecord.data.entity.*;
 import student.informatics.medicalrecord.data.repository.AppointmentRepository;
 import student.informatics.medicalrecord.data.repository.DoctorRepository;
 import student.informatics.medicalrecord.data.repository.PatientRepository;
@@ -79,5 +81,46 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment.setAppointmentDate(createAppointmentDTO.getAppointmentDate());
 
         return modelMapperUtil.map(appointmentRepository.save(appointment), SimpleAppointmentDTO.class);
+    }
+
+    @Override
+    public List<SimpleAppointmentDTO> findAllSimpleAppointmentsByDoctorId(String doctorId) {
+
+        List<Appointment> appointments = appointmentRepository.findAllByDoctorId(doctorId);
+
+        return modelMapperUtil.mapList(appointments, SimpleAppointmentDTO.class);
+    }
+
+    @Override
+    public List<SimpleAppointmentDTO> findAllSimpleAppointmentsByPatientId(String patientId) {
+
+        List<Appointment> appointments = appointmentRepository.findAllByPatientId(patientId);
+
+        return modelMapperUtil.mapList(appointments, SimpleAppointmentDTO.class);
+    }
+
+    @Override
+    public DetailedAppointmentDTO findAppointmentDetailedById(String id) {
+
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new AppointmentNotFoundException(String.format("Appointment with ID: '%s' not found", id)));
+
+        DetailedAppointmentDTO detailedAppointmentDTO = modelMapperUtil.map(appointment, DetailedAppointmentDTO.class);
+
+        if (appointment.getDiagnoses() != null && !appointment.getDiagnoses().isEmpty()) {
+
+            Diagnose diagnose = appointment.getDiagnoses().iterator().next();
+            SimpleDiagnoseDTO simpleDiagnoseDTO = modelMapperUtil.map(diagnose, SimpleDiagnoseDTO.class);
+            detailedAppointmentDTO.setDiagnose(simpleDiagnoseDTO);
+        }
+
+        if (appointment.getPrescriptions() != null && !appointment.getPrescriptions().isEmpty()) {
+
+            Prescription prescription = appointment.getPrescriptions().iterator().next();
+            PrescriptionMedicinesDTO prescriptionMedicinesDTO = modelMapperUtil.map(prescription, PrescriptionMedicinesDTO.class);
+            detailedAppointmentDTO.setPrescription(prescriptionMedicinesDTO);
+        }
+
+        return detailedAppointmentDTO;
     }
 }

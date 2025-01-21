@@ -40,6 +40,12 @@ public class PatientController {
      return ResponseEntity.ok(patientService.findAllSimplePatientsByDoctorId(id));
     }
 
+    @GetMapping("/simple/{diagnose_code_id}/diagnose-code")
+    public ResponseEntity<List<SimplePatientDTO>> findPatientsByDiagnosisCode(
+            @PathVariable("diagnose_code_id") String id) {
+                return ResponseEntity.ok(patientService.findPatientsByDiagnosisCode(id));
+    }
+
     // TODO Delete Endpoint
 
 

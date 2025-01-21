@@ -1,6 +1,8 @@
 package student.informatics.medicalrecord.service;
 
+import student.informatics.medicalrecord.data.dto.medicine.MedicineIdsRequestDTO;
 import student.informatics.medicalrecord.data.dto.prescription.CreatePrescriptionDTO;
+import student.informatics.medicalrecord.data.dto.prescription.PrescriptionMedicinesDTO;
 import student.informatics.medicalrecord.data.dto.prescription.SimplePrescriptionDTO;
 import student.informatics.medicalrecord.data.dto.prescription.UpdatePrescriptionDTO;
 
@@ -15,5 +17,7 @@ public interface PrescriptionService {
     SimplePrescriptionDTO createPrescription(CreatePrescriptionDTO createPrescriptionDTO);
 
     SimplePrescriptionDTO updatePrescription(UpdatePrescriptionDTO updatePrescriptionDTO, String id);
+
+    PrescriptionMedicinesDTO addMedicinesToPrescription(MedicineIdsRequestDTO medicinesId, String prescriptionId);
 
 }

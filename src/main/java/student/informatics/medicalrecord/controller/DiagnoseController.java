@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import student.informatics.medicalrecord.data.dto.diagnose.CreateDiagnoseDTO;
+import student.informatics.medicalrecord.data.dto.diagnose.DiagnosisFrequencyDTO;
 import student.informatics.medicalrecord.data.dto.diagnose.SimpleDiagnoseDTO;
 import student.informatics.medicalrecord.data.dto.diagnose.UpdateDiagnoseDTO;
 import student.informatics.medicalrecord.service.DiagnoseService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8050")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api.medical-record/v1/diagnoses")
@@ -37,5 +39,10 @@ public class DiagnoseController {
             @RequestBody UpdateDiagnoseDTO updateDiagnoseDTO,
             @PathVariable("diagnose_id") String id) {
         return ResponseEntity.ok(diagnoseService.updateDiagnose(updateDiagnoseDTO, id));
+    }
+
+    @GetMapping("/most-frequent")
+    public ResponseEntity<List<DiagnosisFrequencyDTO>> findMostFrequentDiagnoses() {
+        return ResponseEntity.ok(diagnoseService.findMostFrequentDiagnoses());
     }
 }

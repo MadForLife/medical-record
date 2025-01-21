@@ -68,4 +68,10 @@ public class PatientServiceImpl implements PatientService {
         return modelMapperUtil
                 .mapList(patientRepository.findByPersonalDoctorId(id), SimplePatientDTO.class);
     }
+
+    @Override
+    public List<SimplePatientDTO> findPatientsByDiagnosisCode(String diagnosisCode) {
+        return modelMapperUtil
+                .mapList(patientRepository.findPatientsByDiagnosisCode(diagnosisCode), SimplePatientDTO.class);
+    }
 }

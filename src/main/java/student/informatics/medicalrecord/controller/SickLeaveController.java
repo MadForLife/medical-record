@@ -10,6 +10,7 @@ import student.informatics.medicalrecord.service.SickLeaveService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8050")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api.medical-record/v1/sick-leaves")

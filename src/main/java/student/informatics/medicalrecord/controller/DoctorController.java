@@ -3,6 +3,7 @@ package student.informatics.medicalrecord.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import student.informatics.medicalrecord.data.dto.doctor.DoctorPatientCountDTO;
 import student.informatics.medicalrecord.data.dto.doctor.DoctorSpecialitiesDTO;
 import student.informatics.medicalrecord.data.dto.doctor.SimpleDoctorDTO;
 import student.informatics.medicalrecord.data.dto.doctor.UpdateDoctorStatusDTO;
@@ -43,6 +44,11 @@ public class DoctorController {
     @GetMapping("/with-specialities")
     public ResponseEntity<List<DoctorSpecialitiesDTO>> findAllDoctorsWithSpecialities() {
         return ResponseEntity.ok(doctorService.findAllDoctorsWithSpecialities());
+    }
+
+    @GetMapping("simple/patient-count")
+    public ResponseEntity<List<DoctorPatientCountDTO>> findAllDoctorPatientCount() {
+        return ResponseEntity.ok(doctorService.findPatientCountByDoctor());
     }
 
 }

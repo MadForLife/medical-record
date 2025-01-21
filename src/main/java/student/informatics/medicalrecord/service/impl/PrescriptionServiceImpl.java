@@ -2,12 +2,17 @@ package student.informatics.medicalrecord.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import student.informatics.medicalrecord.data.dto.medicine.MedicineIdsRequestDTO;
+import student.informatics.medicalrecord.data.dto.medicine.SimpleMedicineDTO;
 import student.informatics.medicalrecord.data.dto.prescription.CreatePrescriptionDTO;
+import student.informatics.medicalrecord.data.dto.prescription.PrescriptionMedicinesDTO;
 import student.informatics.medicalrecord.data.dto.prescription.SimplePrescriptionDTO;
 import student.informatics.medicalrecord.data.dto.prescription.UpdatePrescriptionDTO;
 import student.informatics.medicalrecord.data.entity.Appointment;
+import student.informatics.medicalrecord.data.entity.Medicine;
 import student.informatics.medicalrecord.data.entity.Prescription;
 import student.informatics.medicalrecord.data.repository.AppointmentRepository;
+import student.informatics.medicalrecord.data.repository.MedicineRepository;
 import student.informatics.medicalrecord.data.repository.PrescriptionRepository;
 import student.informatics.medicalrecord.exception.AppointmentNotFoundException;
 import student.informatics.medicalrecord.exception.PrescriptionNotFoundException;
@@ -22,6 +27,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
     private final PrescriptionRepository prescriptionRepository;
     private final AppointmentRepository appointmentRepository;
+    private final MedicineRepository medicineRepository;
     private final ModelMapperUtil modelMapperUtil;
 
     @Override
@@ -69,5 +75,28 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
         return modelMapperUtil.map(prescriptionRepository.save(prescription), SimplePrescriptionDTO.class);
 
+    }
+
+    @Override
+    public PrescriptionMedicinesDTO addMedicinesToPrescription(MedicineIdsRequestDTO medicinesId, String prescriptionId) {
+
+        Prescription prescription = prescriptionRepository.findById(prescriptionId)
+                .orElseThrow(() -> new PrescriptionNotFoundException(String.format("Prescription with ID: '%s' not found", prescriptionId)));
+
+        List<Medicine> medicines = medicineRepository.findAllById(medicinesId.getMedicineIds());
+
+
+        List<SimpleMedicineDTO> prescriptionMedicinesDTOS = modelMapperUtil
+                .mapList(medicines, SimpleMedicineDTO.class);
+
+        prescription.getMedicines().addAll(medicines);
+
+        PrescriptionMedicinesDTO prescriptionMedicinesDTO = new PrescriptionMedicinesDTO();
+        prescriptionMedicinesDTO.setId(prescription.getId());
+        prescriptionMedicinesDTO.setDescription(prescription.getDescription());
+        prescriptionMedicinesDTO.setMedicines(prescriptionMedicinesDTOS);
+
+        prescriptionRepository.save(prescription);
+        return prescriptionMedicinesDTO;
     }
 }

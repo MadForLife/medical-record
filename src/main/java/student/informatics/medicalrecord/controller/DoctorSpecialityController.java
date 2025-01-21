@@ -12,6 +12,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 
+@CrossOrigin(origins = "http://localhost:8050")
 @RestController
 @RequestMapping("/api.medical-record/v1/doctor-specialities")
 public class DoctorSpecialityController {

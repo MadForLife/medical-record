@@ -28,4 +28,14 @@ public class Patient extends User {
 
     @OneToMany(mappedBy = "patient")
     private Set<Appointment> appointments;
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "ucn='" + ucn + '\'' +
+                ", isHealthInsured=" + isHealthInsured +
+                ", personalDoctor=" + personalDoctor +
+                ", appointments=" + appointments +
+                "} " + super.toString();
+    }
 }
